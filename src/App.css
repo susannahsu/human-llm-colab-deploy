@@ -13,7 +13,7 @@ html, body, #root, .App {
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;  /* Two equal-width columns */
-  grid-template-rows: 1fr 1fr;     /* Two rows for the right side */
+  grid-template-rows: 1fr;     /* Two rows for the right side */
   height: 100vh;                   /* Full viewport height */
   width: 100vw;                    /* Full viewport width */
 }
@@ -43,18 +43,6 @@ html, body, #root, .App {
 
 .website-preview-section > * {
   flex: 1;            /* Allow child to grow and fill the parent */
-}
-
-/* Bottom right section for scratch pad */
-.scratch-pad-section {
-  grid-column: 2 / 3;             /* Right column, bottom */
-  grid-row: 2 / 3;                /* Second row */
-  background-color: #d0d0d0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
 }
 
 /* Basic styling for placeholders */
