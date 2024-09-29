@@ -49,7 +49,7 @@ const Chat = ({htmlString, setHtmlString}) => {
     try {
       // Update this to call your Lambda function via API Gateway
       const response = await axios.post(
-        'https://13ah9euji8.execute-api.us-east-2.amazonaws.com/dev/openaiapicallhandler', // Replace with your API Gateway URL
+        'https://13ah9euji8.execute-api.us-east-2.amazonaws.com/dev/OpenAIAPICallHandler', // Replace with your API Gateway URL
         {
           htmlString: htmlString,
           messages: [
