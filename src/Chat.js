@@ -54,7 +54,7 @@ const Chat = ({htmlString, setHtmlString}) => {
           htmlString: htmlString,
           messages: [
             ...messages,
-            { role: 'system', content: `Here is the script: ${htmlString}. Don't give me any instructions. Please return the revised, complete code ONLY, in strict text form.` },
+            { role: 'system', content: `Here is the script: ${htmlString}. DO NOT GIVE ME ANY INSTRUCTIONS OR COMMENTS. Please return the revised, complete code ONLY, in strict text form.` },
             newMessage
           ]
         }
