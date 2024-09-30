@@ -61,7 +61,7 @@ const Chat = ({htmlString, setHtmlString}) => {
       );
 
       // Extract the bot's response from Lambda's output
-      const botMessage = response.data.message;
+      const botMessage = response.data.message.choices[0].message.content;
       setHtmlString(botMessage);
       setMessages([...messages, newMessage, { role: 'bot', content: botMessage }]);
     } catch (error) {
