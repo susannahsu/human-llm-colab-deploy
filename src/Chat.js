@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
 const Chat = ({htmlString, setHtmlString}) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [userID, setUserID] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (userID === '') {
+      const id = prompt('Enter your user ID:');
+      setUserID(id);
+    }
+  }, [])
 
   // const handleSend = async () => {
   //   const newMessage = { role: 'user', content: input };
@@ -51,7 +59,8 @@ const Chat = ({htmlString, setHtmlString}) => {
       const response = await axios.post(
         'https://13ah9euji8.execute-api.us-east-2.amazonaws.com/dev/OpenAIAPICallHandler', // Replace with your API Gateway URL
         {
-          htmlString: htmlString,
+          htmlString,
+          userID,
           messages: [
             ...messages,
             { role: 'system', content: `Here is the script: ${htmlString}. DO NOT GIVE ME ANY INSTRUCTIONS OR COMMENTS. Please return the revised, complete code ONLY, in strict text form.` },
@@ -63,7 +72,7 @@ const Chat = ({htmlString, setHtmlString}) => {
       // Extract the bot's response from Lambda's output
       const botMessage = response.data.message.choices[0].message.content;
       setHtmlString(botMessage);
-      setMessages([...messages, newMessage, { role: 'bot', content: botMessage }]);
+      setMessages([...messages, newMessage, { role: 'assistant', content: botMessage }]);
     } catch (error) {
       console.error('Error:', error);
     } finally {
