@@ -7,6 +7,7 @@ const Chat = ({htmlString, setHtmlString}) => {
   const [input, setInput] = useState('');
   const [userID, setUserID] = useState('');
   const [loading, setLoading] = useState(false);
+  const [displayMessages, setDisplayMessages] = useState([]);
 
   useEffect(() => {
     if (userID === '') {
@@ -15,55 +16,30 @@ const Chat = ({htmlString, setHtmlString}) => {
     }
   }, [])
 
-  // const handleSend = async () => {
-  //   const newMessage = { role: 'user', content: input };
-  //   setMessages([...messages, newMessage]);
-  //   setLoading(true);
-
-  //   try {
-  //     const response = await axios.post(
-  //       'https://api.openai.com/v1/chat/completions',
-  //       {
-  //         model: 'gpt-3.5-turbo', 
-  //         messages: [
-  //           ...messages, 
-  //           { role: 'system', content: `Here is the script: ${htmlString}. Don't give me any instructions.Please return the revised, complete code ONLY, in strict text form.` },
-  //           newMessage],
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`, // Add your OpenAI API key here
-  //           'Content-Type': 'application/json',
-  //         },
-  //       }
-  //     );
-
-  //     const botMessage = response.data.choices[0].message;
-  //     setHtmlString(botMessage.content);
-  //     setMessages([...messages, newMessage, botMessage]);
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }finally {
-  //       setLoading(false);
-  //   }
-  //   setInput('');
-  // };
-
   const handleSend = async () => {
     const newMessage = { role: 'user', content: input };
     setMessages([...messages, newMessage]);
+    //setDisplayMessages([...displayMessages, newMessage]);
+    setDisplayMessages((prevDisplayMessages) => [...prevDisplayMessages, newMessage]);
+
     setLoading(true);
 
     try {
-      // Update this to call your Lambda function via API Gateway
       const response = await axios.post(
-        'https://13ah9euji8.execute-api.us-east-2.amazonaws.com/dev/OpenAIAPICallHandler', // Replace with your API Gateway URL
+        'https://13ah9euji8.execute-api.us-east-2.amazonaws.com/dev/OpenAIAPICallHandler', 
         {
           htmlString,
           userID,
           messages: [
             ...messages,
-            { role: 'system', content: `Here is the script: ${htmlString}. DO NOT GIVE ME ANY INSTRUCTIONS OR COMMENTS. Please return the revised, complete code ONLY, in strict text form.` },
+            { role: 'system', 
+              content: `Suppose you are collaborating with the user to customize an existing website. You are talking to this user, who is your client. Here is the current script: ${htmlString}. If you're unclear on the user's goal, ask a clarifying question or state your assumptions. Always provide the response in this format:
+              # Clarification: [If any]
+              # Assumptions: [If any]
+              # Updated Code:
+              [Updated code here]
+              For the updated code, please return the revised, COMPLETE htmlString, in strict text form. Start from how the original htmlString started.`
+            },
             newMessage
           ]
         }
@@ -71,7 +47,25 @@ const Chat = ({htmlString, setHtmlString}) => {
 
       // Extract the bot's response from Lambda's output
       const botMessage = response.data.message.choices[0].message.content;
-      setHtmlString(botMessage);
+
+      const clarificationMatch = botMessage.match(/# Clarification:(.*?)(#|$)/s);
+      const assumptionMatch = botMessage.match(/# Assumptions:(.*?)(#|$)/s);
+
+      let clarification = clarificationMatch && clarificationMatch[1] ? clarificationMatch[1].trim() : "None";
+      let assumption = assumptionMatch && assumptionMatch[1] ? assumptionMatch[1].trim() : "None";
+
+      const clarificationAssumptionDisplay = `Clarification: ${clarification}\nAssumptions: ${assumption}`;
+      setDisplayMessages((prevDisplayMessages) => [
+        ...prevDisplayMessages,
+        { role: 'assistant', content: clarificationAssumptionDisplay },
+      ]);
+      
+      const codeMatch = botMessage.match(/```html([\s\S]*?)```/);
+      if (codeMatch && codeMatch[1]) {
+        // Set the extracted code as the updated htmlString
+        setHtmlString(codeMatch[1].trim());
+      }
+
       setMessages([...messages, newMessage, { role: 'assistant', content: botMessage }]);
     } catch (error) {
       console.error('Error:', error);
@@ -85,7 +79,13 @@ const Chat = ({htmlString, setHtmlString}) => {
   return (
     <div className="chat-container">
       <div className="chat-window">
-        {messages.map((msg, index) => (
+        {/* {messages.map((msg, index) => (
+          <div key={index} className={`message ${msg.role}`}>
+            <p className="message-content">{msg.content}</p>
+          </div>
+        ))} */}
+        {/* Render displayMessages for UI */}
+        {displayMessages.map((msg, index) => (
           <div key={index} className={`message ${msg.role}`}>
             <p className="message-content">{msg.content}</p>
           </div>
