@@ -26,6 +26,10 @@ function App() {
           .main-content section {
             display: none;
           }
+          
+          .footer {
+            display: block;
+          }
 
           /* Show section when targeted */
           #home:target, #about:target, #contact:target {
