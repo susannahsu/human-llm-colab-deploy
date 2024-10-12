@@ -46,7 +46,7 @@ const Chat = ({htmlString, setHtmlString}) => {
       );
 
       // Extract the bot's response from Lambda's output
-      const botMessage = response.data.message;
+      const botMessage = response.data.message.choices[0].message.content;
 
       const clarificationMatch = botMessage.match(/# Clarification:(.*?)(#|$)/s);
       const assumptionMatch = botMessage.match(/# Assumptions:(.*?)(#|$)/s);
