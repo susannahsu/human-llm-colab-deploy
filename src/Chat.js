@@ -38,7 +38,7 @@ const Chat = ({htmlString, setHtmlString}) => {
               # Assumptions: [If any]
               # Updated Code:
               [Updated code here]
-              For the updated code, please return the revised, COMPLETE htmlString, in strict text form. Start from how the original htmlString started.`
+              For the updated code, please return the revised, COMPLETE htmlString, in strict text form. Do not use an 'absolute' position value ever. Start from how the original htmlString started.`
             },
             newMessage
           ]
