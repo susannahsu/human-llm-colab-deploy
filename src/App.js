@@ -72,7 +72,7 @@ function App() {
         </main>
 
         <footer class="footer">
-          <p>&copy; 2024 Harvard University</p>
+          <p>&copy; 2024 My Website</p>
         </footer>
       </body>
     </div>

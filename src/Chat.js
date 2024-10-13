@@ -8,13 +8,30 @@ const Chat = ({htmlString, setHtmlString}) => {
   const [userID, setUserID] = useState('');
   const [loading, setLoading] = useState(false);
   const [displayMessages, setDisplayMessages] = useState([]);
+  const [isUserIDValid, setIsUserIDValid] = useState(false); 
+  const [surveyData, setSurveyData] = useState({
+    name: '',
+    feedback: '',
+    rating: 5,
+  });
+
+  // useEffect(() => {
+  //   if (userID === '') {
+  //     const id = prompt('Enter your user ID:');
+  //     setUserID(id);
+  //   }
+  // }, [])
 
   useEffect(() => {
-    if (userID === '') {
-      const id = prompt('Enter your user ID:');
-      setUserID(id);
+    let id;
+    while (!id) {
+      id = prompt('Enter your user ID:');
+      if (id) {
+        setUserID(id);
+        setIsUserIDValid(true); // Set validation flag to true
+      }
     }
-  }, [])
+  }, []);
 
   const handleSend = async () => {
     const newMessage = { role: 'user', content: input };
@@ -75,6 +92,17 @@ const Chat = ({htmlString, setHtmlString}) => {
     setInput('');
   };
 
+  const handleSurveyChange = (e) => {
+    const { name, value } = e.target;
+    setSurveyData({ ...surveyData, [name]: value });
+  };
+
+  const handleSurveySubmit = (e) => {
+    e.preventDefault();
+    console.log('Survey Submitted:', surveyData);
+    alert('Thank you for your feedback!');
+  };
+
 
   return (
     <div className="chat-container">
@@ -99,6 +127,49 @@ const Chat = ({htmlString, setHtmlString}) => {
             </div>
         )}
       </div>
+
+      {/* Survey Form */}
+      <div className="survey-form" style={{ marginBottom: '10px', padding: '10px', borderBottom: '1px solid #ccc' }}>
+        <h2>Feedback Survey</h2>
+        <form onSubmit={handleSurveySubmit}>
+          <div>
+            <label>Name: </label>
+            <input
+              type="text"
+              name="name"
+              value={surveyData.name}
+              onChange={handleSurveyChange}
+              required
+              style={{ margin: '5px' }}
+            />
+          </div>
+          <div>
+            <label>Feedback: </label>
+            <textarea
+              name="feedback"
+              value={surveyData.feedback}
+              onChange={handleSurveyChange}
+              rows="3"
+              style={{ width: '100%', margin: '5px' }}
+              required
+            ></textarea>
+          </div>
+          <div>
+            <label>Rating: </label>
+            <input
+              type="number"
+              name="rating"
+              value={surveyData.rating}
+              onChange={handleSurveyChange}
+              min="1"
+              max="5"
+              style={{ margin: '5px' }}
+            />
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+
       <div className="chat-input">
         <input
           type="text"
