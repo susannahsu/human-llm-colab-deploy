@@ -97,8 +97,12 @@ const Chat = ({htmlString, setHtmlString}) => {
     setSurveyData({ ...surveyData, [name]: value });
   };
 
-  const handleSurveySubmit = (e) => {
+  const handleSurveySubmit = async (e) => {
     e.preventDefault();
+    await axios.post('https://13ah9euji8.execute-api.us-east-2.amazonaws.com/dev/humanAISurveyResponse', {
+      ...surveyData,
+      userID,
+    })
     console.log('Survey Submitted:', surveyData);
     alert('Thank you for your feedback!');
   };

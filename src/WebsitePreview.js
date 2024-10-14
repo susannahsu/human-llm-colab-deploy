@@ -3,9 +3,10 @@ import './WebsitePreview.css';
 
 const WebsitePreview = ({htmlString}) => {
     return (
-        <div
+        <iframe
         className="website-preview"
-        dangerouslySetInnerHTML={{ __html: htmlString }}
+        // dangerouslySetInnerHTML={{ __html: htmlString }}
+        srcDoc={htmlString}
         />
     );
     };

@@ -11,6 +11,78 @@ function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Single Page Navigation</title>
         <style>
+          html,
+          body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+          }
+
+          .website-preview {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+          }
+
+          .header {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+          }
+          
+          .header h1 {
+            margin: 0;
+          }
+          
+          .nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+          }
+          
+          .nav li {
+            margin-right: 15px;
+          }
+          
+          .nav a {
+            color: #fff;
+            text-decoration: none;
+          }
+          
+          .main-content {
+            flex: 1;
+            padding: 20px;
+          }
+          
+          .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+          }
+          
+          .nav button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+          }
+          
+          .nav button:hover,
+          .nav button.active {
+            text-decoration: underline;
+          }
+          
+          /* Adjust main content */
+          .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto; /* Add scrolling if content overflows */
+          }
           /* Basic styles for navigation */
           .nav ul {
             list-style: none;
@@ -47,9 +119,9 @@ function App() {
           <h1>My Website</h1>
           <nav class="nav">
             <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a id="home-btn" href="#home">Home</a></li>
+              <li><a id="about-btn" href="#about">About</a></li>
+              <li><a id="contact-btn" href="#contact">Contact</a></li>
             </ul>
           </nav>
         </header>
@@ -86,7 +158,9 @@ function App() {
       const aboutPage = document.getElementById('about');
       const contactPage = document.getElementById('contact');
 
-      function setCurrentPage(page) {
+      function setCurrentPage(e, page) {
+        e.preventDefault();
+        e.stopPropagation();
         homePage.style.display = page === 'home' ? 'block' : 'none';
         aboutPage.style.display = page === 'about' ? 'block' : 'none';
         contactPage.style.display = page === 'contact' ? 'block' : 'none';
@@ -96,9 +170,9 @@ function App() {
         contactBtn.classList.toggle('active', page === 'contact');
       }
 
-      homeBtn.addEventListener('click', () => setCurrentPage('home'));
-      aboutBtn.addEventListener('click', () => setCurrentPage('about'));
-      contactBtn.addEventListener('click', () => setCurrentPage('contact'));
+      homeBtn.addEventListener('click', (e) => setCurrentPage(e, 'home'));
+      aboutBtn.addEventListener('click', (e) => setCurrentPage(e, 'about'));
+      contactBtn.addEventListener('click', (e) => setCurrentPage(e, 'contact'));
     </script>
 
 
