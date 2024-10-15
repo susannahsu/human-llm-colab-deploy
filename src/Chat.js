@@ -1,34 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {v4 as uuidv4} from 'uuid';
 
 
 const Chat = ({htmlString, setHtmlString}) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const [userID, setUserID] = useState('');
+  const [userID, setUserID] = useState(uuidv4());
+  const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
   const [displayMessages, setDisplayMessages] = useState([]);
-  const [isUserIDValid, setIsUserIDValid] = useState(false); 
   const [surveyData, setSurveyData] = useState({
     name: '',
     feedback: '',
     rating: 5,
   });
 
-  // useEffect(() => {
-  //   if (userID === '') {
-  //     const id = prompt('Enter your user ID:');
-  //     setUserID(id);
-  //   }
-  // }, [])
 
   useEffect(() => {
-    let id;
-    while (!id) {
-      id = prompt('Enter your user ID:');
-      if (id) {
-        setUserID(id);
-        setIsUserIDValid(true); // Set validation flag to true
+    let name;
+    while (!name) {
+      name = prompt('Enter your name:');
+      if (name) {
+        setUserName(name);
       }
     }
   }, []);
@@ -47,6 +41,7 @@ const Chat = ({htmlString, setHtmlString}) => {
         {
           htmlString,
           userID,
+          userName,
           messages: [
             ...messages,
             { role: 'system', 
