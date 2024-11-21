@@ -10,12 +10,37 @@ const Chat = ({htmlString, setHtmlString}) => {
   const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
   const [displayMessages, setDisplayMessages] = useState([]);
-  const [surveyData, setSurveyData] = useState({
-    name: '',
-    feedback: '',
-    rating: 5,
+  // const [surveyData, setSurveyData] = useState({
+  //   name: '',
+  //   feedback: '',
+  //   rating: 5,
+  // });
+  const [showModal, setShowModal] = useState(false);
+
+  const [feedbackData, setFeedbackData] = useState({
+    satisfaction: '',
+    intention: '',
+    conflict: '',
+    adjustments: '',
+    clarifications: '',
   });
 
+  const handleFeedbackChange = (e) => {
+    const { name, value } = e.target;
+    setFeedbackData({ ...feedbackData, [name]: value });
+  };
+
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    // Send feedbackData to your API or log it
+    await axios.post('https://13ah9euji8.execute-api.us-east-2.amazonaws.com/dev/humanAISurveyResponse', {
+      ...feedbackData,
+      userID,
+    })
+    console.log('Feedbakc Submitted:', feedbackData);
+    alert('Feedback submitted!');
+    setShowModal(false);
+  };
 
   useEffect(() => {
     let name;
@@ -87,20 +112,20 @@ const Chat = ({htmlString, setHtmlString}) => {
     setInput('');
   };
 
-  const handleSurveyChange = (e) => {
-    const { name, value } = e.target;
-    setSurveyData({ ...surveyData, [name]: value });
-  };
+  // const handleSurveyChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setSurveyData({ ...surveyData, [name]: value });
+  // };
 
-  const handleSurveySubmit = async (e) => {
-    e.preventDefault();
-    await axios.post('https://13ah9euji8.execute-api.us-east-2.amazonaws.com/dev/humanAISurveyResponse', {
-      ...surveyData,
-      userID,
-    })
-    console.log('Survey Submitted:', surveyData);
-    alert('Thank you for your feedback!');
-  };
+  // const handleSurveySubmit = async (e) => {
+  //   e.preventDefault();
+  //   await axios.post('https://13ah9euji8.execute-api.us-east-2.amazonaws.com/dev/humanAISurveyResponse', {
+  //     ...surveyData,
+  //     userID,
+  //   })
+  //   console.log('Survey Submitted:', surveyData);
+  //   alert('Thank you for your feedback!');
+  // };
 
 
   return (
@@ -128,7 +153,7 @@ const Chat = ({htmlString, setHtmlString}) => {
       </div>
 
       {/* Survey Form */}
-      <div className="survey-form" style={{ marginBottom: '10px', padding: '10px', borderBottom: '1px solid #ccc' }}>
+      {/* <div className="survey-form" style={{ marginBottom: '10px', padding: '10px', borderBottom: '1px solid #ccc' }}>
         <h2>Feedback Survey</h2>
         <form onSubmit={handleSurveySubmit}>
           <div>
@@ -167,7 +192,7 @@ const Chat = ({htmlString, setHtmlString}) => {
           </div>
           <button type="submit">Submit</button>
         </form>
-      </div>
+      </div> */}
 
       <div className="chat-input">
         <input
@@ -179,6 +204,152 @@ const Chat = ({htmlString, setHtmlString}) => {
         />
         <button onClick={handleSend}>Send</button>
       </div>
+
+      <div className="feedback-button">
+          <button onClick={() => setShowModal(true)}>Errors/Feedback</button>
+      </div>
+
+      {showModal && (
+        <div className="feedback-modal">
+          <div className="modal-content">
+            <h2>Feedback</h2>
+            <form onSubmit={handleFeedbackSubmit}>
+              <div>
+                <label>Are you satisfied with the current state of this attribute?</label>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      name="satisfaction"
+                      value="satisfied"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    Satisfied
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="satisfaction"
+                      value="unsatisfied"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    Unsatisfied
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label>Did the language model get your intention correctly?</label>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      name="intention"
+                      value="yes"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="intention"
+                      value="no"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    No
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label>Did this change conflict with other changes?</label>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      name="conflict"
+                      value="yes"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="conflict"
+                      value="no"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    No
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label>Did ChatGPT adjust effectively to your instructions after initial mistakes?</label>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      name="adjustments"
+                      value="yes"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="adjustments"
+                      value="no"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    No
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="adjustments"
+                      value="na"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    N/A
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label>Did ChatGPT ask clarifying questions or make useful assumptions?</label>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      name="clarifications"
+                      value="yes"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="clarifications"
+                      value="no"
+                      onChange={handleFeedbackChange}
+                    />{' '}
+                    No
+                  </label>
+                </div>
+              </div>
+              <div>
+                <button type="submit">Submit</button>
+                <button type="button" onClick={() => setShowModal(false)}>
+                  Close
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+
     </div>
   );
 };
