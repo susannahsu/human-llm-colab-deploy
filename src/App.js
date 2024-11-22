@@ -1,9 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Chat from './Chat';
 import WebsitePreview from './WebsitePreview';
 import './App.css';
 
 function App() {
+  const [userName, setUserName] = useState('');
+  
+  useEffect(() => {
+    let name;
+    name = prompt('Enter your name:');
+    if (name) {
+      setUserName(name);
+    }
+  }, [userName]);
+
   const [htmlString, setHtmlString] = useState(`
     <div class="website-preview">
       <head>
@@ -182,7 +192,7 @@ function App() {
       <div className="container">
         {/* Chat */}
         <div className="chat-section">
-          <Chat htmlString={htmlString} setHtmlString={setHtmlString} />
+          <Chat htmlString={htmlString} setHtmlString={setHtmlString} userName={userName} />
         </div>
 
         {/* Website Preview */}

@@ -7,7 +7,6 @@ const Chat = ({htmlString, setHtmlString}) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [userID, setUserID] = useState(uuidv4());
-  const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
   const [displayMessages, setDisplayMessages] = useState([]);
   // const [surveyData, setSurveyData] = useState({
@@ -41,16 +40,6 @@ const Chat = ({htmlString, setHtmlString}) => {
     alert('Feedback submitted!');
     setShowModal(false);
   };
-
-  useEffect(() => {
-    let name;
-    while (!userName) {
-      name = prompt('Enter your name:');
-      if (name) {
-        setUserName(name);
-      }
-    }
-  }, []);
 
   const handleSend = async () => {
     const newMessage = { role: 'user', content: input };
