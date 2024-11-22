@@ -44,7 +44,7 @@ const Chat = ({htmlString, setHtmlString}) => {
 
   useEffect(() => {
     let name;
-    while (!name) {
+    while (!userName) {
       name = prompt('Enter your name:');
       if (name) {
         setUserName(name);
