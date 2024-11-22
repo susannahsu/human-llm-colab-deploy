@@ -3,7 +3,7 @@ import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
 
 
-const Chat = ({htmlString, setHtmlString}) => {
+const Chat = ({htmlString, setHtmlString, userName}) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [userID, setUserID] = useState(uuidv4());

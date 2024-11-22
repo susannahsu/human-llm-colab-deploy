@@ -8,11 +8,13 @@ function App() {
   
   useEffect(() => {
     let name;
-    name = prompt('Enter your name:');
-    if (name) {
-      setUserName(name);
+    while(!name) {
+      name = prompt('Enter your name:');
+      if (name) {
+        setUserName(name);
+      }
     }
-  }, [userName]);
+  }, []);
 
   const [htmlString, setHtmlString] = useState(`
     <div class="website-preview">
