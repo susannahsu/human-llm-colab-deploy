@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Blog on Life - Stage 1</title>
+    <!-- Google Font (Poppins) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Basic Reset & Font */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+      }
+
+      /* Header */
+      header {
+        background-color: #1abc9c;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+
+      /* Navigation */
+      nav {
+        margin-top: 15px;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      /* Main Content */
+      main {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+      section h2 {
+        margin-bottom: 15px;
+        font-size: 1.8rem;
+      }
+
+      /* Hero Section */
+      .hero {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      /* Blog Section */
+      .blog-post {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .blog-post h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      /* About Section */
+      .about {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        background-color: #333;
+        color: #fff;
+        padding: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>A Blog on Life</h1>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section id="home" class="hero">
+        <h2>Discover the Beauty of Life</h2>
+        <p>Join me on a journey of exploration and inspiration.</p>
+      </section>
+
+      <!-- Blog Section -->
+      <section id="blog">
+        <h2>Latest Blog Posts</h2>
+        <div class="blog-post">
+          <h3>Chasing Sunsets</h3>
+          <p>There's something magical about sunsets...</p>
+        </div>
+        <div class="blog-post">
+          <h3>Building Better Habits</h3>
+          <p>Small changes can lead to big transformations...</p>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="about">
+        <h2>About Me</h2>
+        <p>Hello! I'm a passionate writer, explorer, and lifelong learner.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 A Blog on Life | All rights reserved</p>
+    </footer>
+  </body>
+</html>

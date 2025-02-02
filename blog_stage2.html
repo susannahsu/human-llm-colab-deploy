@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>A Blog on Life - Stage 2</title>
+    <!-- Google Font (Poppins) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Global Reset & Font */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to right, #e3f2fd, #bbdefb);
+        color: #2c3e50;
+      }
+
+      /* Header */
+      header {
+        background: linear-gradient(135deg, #2C3E50, #1abc9c);
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        position: -webkit-sticky; /* for Safari */
+        position: sticky;
+        top: 0;
+        z-index: 999;
+      }
+      header h1 {
+        margin-bottom: 5px;
+        font-size: 2rem;
+      }
+
+      /* Navigation */
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.1rem;
+        padding: 8px 16px;
+        border-radius: 16px;
+        transition: background 0.3s, transform 0.2s;
+      }
+      nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+      }
+
+      /* Main */
+      main {
+        max-width: 1000px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+      section {
+        margin-bottom: 50px;
+      }
+      section h2 {
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+        text-align: center;
+      }
+
+      /* Hero Section */
+      .hero {
+        background-color: white;
+        text-align: center;
+        padding: 50px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      .hero h2 {
+        margin-bottom: 15px;
+      }
+      .cta-button {
+        background-color: #1abc9c;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 24px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .cta-button:hover {
+        background-color: #16a085;
+      }
+
+      /* Blog Section */
+      .blog-post {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+      }
+      .blog-post h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      /* Testimonials */
+      .testimonials {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+      .testimonial {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        max-width: 300px;
+        text-align: center;
+      }
+
+      /* Newsletter */
+      .newsletter {
+        text-align: center;
+      }
+      .newsletter form {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        gap: 10px;
+      }
+      .newsletter input {
+        padding: 10px;
+        width: 250px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+      }
+      .newsletter button {
+        background-color: #1abc9c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .newsletter button:hover {
+        background-color: #16a085;
+      }
+
+      /* About Section */
+      .about {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+
+      /* Footer */
+      footer {
+        background-color: #2C3E50;
+        color: #fff;
+        text-align: center;
+        padding: 15px;
+      }
+      footer p {
+        margin: 5px 0;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Header -->
+    <header>
+      <h1>A Blog on Life</h1>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Hero Section -->
+      <section id="home">
+        <div class="hero">
+          <h2>Discover the Beauty of Life</h2>
+          <p>Join me on a journey of exploration, mindfulness, and inspiration.</p>
+          <button class="cta-button">Explore the Blog</button>
+        </div>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section>
+        <h2>What Readers Are Saying</h2>
+        <div class="testimonials">
+          <div class="testimonial">
+            <p>"This blog offers a refreshing perspective on life's everyday moments."</p>
+            <span>- Sarah, Avid Reader</span>
+          </div>
+          <div class="testimonial">
+            <p>"I always leave feeling inspired and ready to embrace mindfulness."</p>
+            <span>- John, Entrepreneur</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blog Section -->
+      <section id="blog">
+        <h2>Latest Blog Posts</h2>
+        <div class="blog-post">
+          <h3>Chasing Sunsets</h3>
+          <p>There's something magical about sunsets...</p>
+        </div>
+        <div class="blog-post">
+          <h3>Building Better Habits</h3>
+          <p>Small changes can lead to big transformations...</p>
+        </div>
+      </section>
+
+      <!-- Newsletter Section -->
+      <section>
+        <h2>Subscribe to the Newsletter</h2>
+        <div class="newsletter">
+          <p>Get the latest posts and updates straight to your inbox!</p>
+          <form>
+            <input type="email" placeholder="Enter your email" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about">
+        <h2>About Me</h2>
+        <div class="about">
+          <p>Hello! I'm a passionate writer, explorer, and lifelong learner. I love sharing stories that inspire and encourage mindful living.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2024 A Blog on Life | Crafted with passion</p>
+    </footer>
+  </body>
+</html>
