@@ -189,7 +189,7 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
     if (stage === 3) {
       const isDone = window.confirm('Are you sure you are done?');
       if (isDone) {
-        window.location.href = 'https://www.google.com'
+        window.location.href = 'https://harvard.az1.qualtrics.com/jfe/form/SV_2nKuDCrRT9m6Nqm'
       }
       return;
     }
