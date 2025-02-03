@@ -6,9 +6,9 @@ import { FaRobot, FaUser } from "react-icons/fa";
 import { use } from 'react';
 // array of video urls
 const videoUrls = [
-  'https://www.youtube.com/watch?v=SqcY0GlETPk',
-  'https://www.youtube.com/watch?v=lWrftaN1nO0',
-  'https://www.youtube.com/watch?v=Qg4ABPymZm8',
+  'https://drive.google.com/file/d/1XaxmQOwG6cDS4wMQOG58y-OXp6YMlt5e/view?usp=sharing',
+  'https://drive.google.com/file/d/1iMv11Fw8V2CfnRpyXSyjZ8jG4K5sAIwL/view?usp=sharing',
+  'https://drive.google.com/file/d/1d43L9FxK5483PdDdI6m0YR4Lt7Cd7ON_/view?usp=sharing',
 ]
 
 const Chat = ({htmlString, setHtmlString, userName}) => {
