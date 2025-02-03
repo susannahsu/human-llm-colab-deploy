@@ -407,26 +407,8 @@
       </section>
       
     </main>
-
     <footer class="footer">
       <p>&copy; 2024 A Blog on Life | Crafted with passion</p>
     </footer>
-
-    <button class="scroll-to-top" onclick="scrollToTop()">↑</button>
-
-    <script>
-      const scrollButton = document.querySelector('.scroll-to-top');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 200) {
-          document.body.classList.add('scrolled');
-        } else {
-          document.body.classList.remove('scrolled');
-        }
-      });
-
-      function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    </script>
   </body>
 </html>

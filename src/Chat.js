@@ -1,7 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
-
+import { BeatLoader } from 'react-spinners';
+import { FaRobot, FaUser } from "react-icons/fa";
+import { use } from 'react';
+// array of video urls
+const videoUrls = [
+  'https://www.youtube.com/watch?v=SqcY0GlETPk',
+  'https://www.youtube.com/watch?v=lWrftaN1nO0',
+  'https://www.youtube.com/watch?v=Qg4ABPymZm8',
+]
 
 const Chat = ({htmlString, setHtmlString, userName}) => {
   const [messages, setMessages] = useState([]);
@@ -15,7 +23,9 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
   //   rating: 5,
   // });
   const [showModal, setShowModal] = useState(false);
-
+  // state of current stage
+  const [stage, setStage] = useState(1);
+  
   const [feedbackData, setFeedbackData] = useState({
     satisfaction: '',
     intention: '',
@@ -24,10 +34,144 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
     clarifications: '',
   });
 
-  const handleFeedbackChange = (e) => {
+  const handleFeedbackChange = useCallback( (e) => {
     const { name, value } = e.target;
-    setFeedbackData({ ...feedbackData, [name]: value });
-  };
+    setFeedbackData(prev => ({ ...prev, [name]: value }));
+  },[setFeedbackData])
+
+  const randomFormQuestions = useMemo(() => [
+    (<div key='satisfaction'>
+        <label>Are you satisfied with the current state of this attribute?</label>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="satisfaction"
+              value="satisfied"
+              onChange={handleFeedbackChange}
+            />{' '}
+            Satisfied
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="satisfaction"
+              value="unsatisfied"
+              onChange={handleFeedbackChange}
+            />{' '}
+            Unsatisfied
+          </label>
+        </div>
+      </div>),
+      (<div key='intention'>
+        <label>Did the language model get your intention correctly?</label>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="intention"
+              value="yes"
+              onChange={handleFeedbackChange}
+            />{' '}
+            Yes
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="intention"
+              value="no"
+              onChange={handleFeedbackChange}
+            />{' '}
+            No
+          </label>
+        </div>
+      </div>),
+      (<div key='conflict'>
+        <label>Did this change conflict with other changes?</label>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="conflict"
+              value="yes"
+              onChange={handleFeedbackChange}
+            />{' '}
+            Yes
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="conflict"
+              value="no"
+              onChange={handleFeedbackChange}
+            />{' '}
+            No
+          </label>
+        </div>
+      </div>),
+      (<div key='adjustments'>
+        <label>Did ChatGPT adjust effectively to your instructions after initial mistakes?</label>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="adjustments"
+              value="yes"
+              onChange={handleFeedbackChange}
+            />{' '}
+            Yes
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="adjustments"
+              value="no"
+              onChange={handleFeedbackChange}
+            />{' '}
+            No
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="adjustments"
+              value="na"
+              onChange={handleFeedbackChange}
+            />{' '}
+            N/A
+          </label>
+        </div>
+      </div>),
+      (<div key='clarifications'>
+        <label>Did ChatGPT ask clarifying questions or make useful assumptions?</label>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="clarifications"
+              value="yes"
+              onChange={handleFeedbackChange}
+            />{' '}
+            Yes
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="clarifications"
+              value="no"
+              onChange={handleFeedbackChange}
+            />{' '}
+            No
+          </label>
+        </div>
+      </div>)
+  ]
+  // randomization part; if comment out 169-173, will be in order
+  .map((question) => ({
+    question, sort: Math.random(),
+  })).sort((a, b) => a.sort - b.sort).map(({ question }) => (
+    question
+  )
+),[handleFeedbackChange, showModal])
 
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +185,19 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
     setShowModal(false);
   };
 
+  const handleNextStage = () => {
+    if (stage === 3) {
+      const isDone = window.confirm('Are you sure you are done?');
+      if (isDone) {
+        window.location.href = 'https://www.google.com'
+      }
+      return;
+    }
+    setStage(stage + 1);
+  };
+
   const handleSend = async () => {
+    setInput('');
     const newMessage = { role: 'user', content: input };
     setMessages([...messages, newMessage]);
     //setDisplayMessages([...displayMessages, newMessage]);
@@ -56,6 +212,7 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
           htmlString,
           userID,
           userName,
+          stage,
           messages: [
             ...messages,
             { role: 'system', 
@@ -98,7 +255,7 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
     } finally {
       setLoading(false);
     }
-    setInput('');
+    
   };
 
   // const handleSurveyChange = (e) => {
@@ -128,6 +285,7 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
         {/* Render displayMessages for UI */}
         {displayMessages.map((msg, index) => (
           <div key={index} className={`message ${msg.role}`}>
+            <div className='message-icon'>{msg.role === 'user' ? <FaUser /> : <FaRobot />}</div>
             <p className="message-content">{msg.content}</p>
           </div>
         ))}
@@ -135,53 +293,13 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
         {/* Loading Indicator */}
         {loading && (
             <div className="message bot">
+              <div className='message-icon'><FaRobot /></div>
                 <p className="message-content">
+                  <BeatLoader color="#36d7b7" size={8} />
                 </p>
             </div>
         )}
       </div>
-
-      {/* Survey Form */}
-      {/* <div className="survey-form" style={{ marginBottom: '10px', padding: '10px', borderBottom: '1px solid #ccc' }}>
-        <h2>Feedback Survey</h2>
-        <form onSubmit={handleSurveySubmit}>
-          <div>
-            <label>Name: </label>
-            <input
-              type="text"
-              name="name"
-              value={surveyData.name}
-              onChange={handleSurveyChange}
-              required
-              style={{ margin: '5px' }}
-            />
-          </div>
-          <div>
-            <label>Feedback: </label>
-            <textarea
-              name="feedback"
-              value={surveyData.feedback}
-              onChange={handleSurveyChange}
-              rows="3"
-              style={{ width: '100%', margin: '5px' }}
-              required
-            ></textarea>
-          </div>
-          <div>
-            <label>Rating: </label>
-            <input
-              type="number"
-              name="rating"
-              value={surveyData.rating}
-              onChange={handleSurveyChange}
-              min="1"
-              max="5"
-              style={{ margin: '5px' }}
-            />
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-      </div> */}
 
       <div className="chat-input">
         <input
@@ -195,7 +313,13 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
       </div>
 
       <div className="feedback-button">
-          <button onClick={() => setShowModal(true)}>Errors/Feedback</button>
+          <div>
+            <button onClick={() => setShowModal(true)}>Errors/Feedback</button>
+            <button onClick={() => {
+              window.open(videoUrls[stage - 1], '_blank');
+            }}>Watch Video</button>
+          </div>
+          <button onClick={handleNextStage}>{stage === 3 ? 'I am done' : `Go to Stage ${stage + 1}`}</button>
       </div>
 
       {showModal && (
@@ -203,130 +327,11 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
           <div className="modal-content">
             <h2>Feedback</h2>
             <form onSubmit={handleFeedbackSubmit}>
-              <div>
-                <label>Are you satisfied with the current state of this attribute?</label>
-                <div>
-                  <label>
-                    <input
-                      type="radio"
-                      name="satisfaction"
-                      value="satisfied"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    Satisfied
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="satisfaction"
-                      value="unsatisfied"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    Unsatisfied
-                  </label>
-                </div>
-              </div>
-              <div>
-                <label>Did the language model get your intention correctly?</label>
-                <div>
-                  <label>
-                    <input
-                      type="radio"
-                      name="intention"
-                      value="yes"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    Yes
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="intention"
-                      value="no"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    No
-                  </label>
-                </div>
-              </div>
-              <div>
-                <label>Did this change conflict with other changes?</label>
-                <div>
-                  <label>
-                    <input
-                      type="radio"
-                      name="conflict"
-                      value="yes"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    Yes
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="conflict"
-                      value="no"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    No
-                  </label>
-                </div>
-              </div>
-              <div>
-                <label>Did ChatGPT adjust effectively to your instructions after initial mistakes?</label>
-                <div>
-                  <label>
-                    <input
-                      type="radio"
-                      name="adjustments"
-                      value="yes"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    Yes
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="adjustments"
-                      value="no"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    No
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="adjustments"
-                      value="na"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    N/A
-                  </label>
-                </div>
-              </div>
-              <div>
-                <label>Did ChatGPT ask clarifying questions or make useful assumptions?</label>
-                <div>
-                  <label>
-                    <input
-                      type="radio"
-                      name="clarifications"
-                      value="yes"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    Yes
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="clarifications"
-                      value="no"
-                      onChange={handleFeedbackChange}
-                    />{' '}
-                    No
-                  </label>
-                </div>
-              </div>
+              
+              
+              {randomFormQuestions}
+              
+              
               <div>
                 <button type="submit">Submit</button>
                 <button type="button" onClick={() => setShowModal(false)}>
