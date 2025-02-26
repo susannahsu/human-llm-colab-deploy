@@ -244,7 +244,7 @@ function App() {
       <div className="container">
         {/* Chat */}
         <div className="chat-section">
-          <Chat htmlString={htmlString} setHtmlString={setHtmlString} userName={userName} />
+          <Chat htmlString={htmlString} setHtmlString={setHtmlString} userID={userID} />
         </div>
 
         {/* Website Preview */}
