@@ -14,7 +14,6 @@ const videoUrls = [
 const Chat = ({htmlString, setHtmlString, userID}) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const [userID, setUserID] = useState(uuidv4());
   const [loading, setLoading] = useState(false);
   const [displayMessages, setDisplayMessages] = useState([]);
   // const [surveyData, setSurveyData] = useState({
