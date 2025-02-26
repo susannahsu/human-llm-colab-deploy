@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     alert(
-      `Your unique ID for this experiment is: ${userID}\n\nPlease copy and save this ID somewhere. You will need it for the post-experiment survey.`
+      `Your unique ID for this experiment is: ${userID}\n\nPlease copy and save this ID somewhere (YOU WILL GET THE CHANCE TO COPY AFTER YOU HIT 'OK'). You will need it for the post-experiment survey.`
     );
   }, [userID]);
 
