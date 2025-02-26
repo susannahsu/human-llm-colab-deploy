@@ -216,12 +216,23 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
           messages: [
             ...messages,
             { role: 'system', 
-              content: `Suppose you are collaborating with the user to customize an existing website. You are talking to this user, who is your client. Here is the current script: ${htmlString}. If you're unclear on the user's goal, ask a clarifying question or state your assumptions. Always provide the response in this format:
-              # Clarification: [If any]
-              # Assumptions: [If any]
-              # Updated Code:
-              [Updated code here]
-              For the updated code, please return the revised, COMPLETE htmlString, in strict text form. Do not use an 'absolute' position value ever. Start from how the original htmlString started.`
+              content: `You are a web development assistant helping a user customize a website to match a reference. Your primary goal is to ensure the user’s instructions are interpreted correctly before making changes.
+                        * When a request is ambiguous, always ask a clarifying question before proceeding.
+                        * Explicitly state any assumptions before making changes and confirm with the user.
+                        * If the user does not provide enough detail, prompt them for more information.
+                        * After making modifications, describe what has been changed so the user can verify alignment with their goal.
+                        * Follow all user instructions carefully and iteratively refine the website based on their feedback.
+
+                        Here is the current script: ${htmlString}.
+
+                        Always provide the response in this format:
+                                      # Clarification: [If any]
+                                      # Assumptions: [If any, here includes the description of the changes]
+                                      # Updated Code:
+                                      [Updated code here]
+                                      For the updated code, please return the revised, COMPLETE htmlString, in strict text form.
+
+                        Start from how the original htmlString started.`
             },
             newMessage
           ]
