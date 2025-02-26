@@ -10,6 +10,8 @@ function App() {
   //const [userName, setUserName] = useState('');
   const [showInstructions, setShowInstructions] = useState(true);
   const [showUserIDModal, setShowUserIDModal] = useState(true);
+
+  const promptType = "explicit";
   
   // useEffect(() => {
   //   let name;
@@ -243,7 +245,7 @@ function App() {
       <div className="container">
         {/* Chat */}
         <div className="chat-section">
-          <Chat htmlString={htmlString} setHtmlString={setHtmlString} userID={userID} />
+          <Chat htmlString={htmlString} setHtmlString={setHtmlString} userID={userID} promptType={promptType}/>
         </div>
 
         {/* Website Preview */}

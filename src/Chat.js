@@ -210,7 +210,7 @@ const Chat = ({htmlString, setHtmlString, userID}) => {
         {
           htmlString,
           userID,
-          //userName,
+          promptType,
           stage,
           messages: [
             ...messages,
