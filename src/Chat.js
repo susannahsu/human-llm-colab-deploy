@@ -64,7 +64,7 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
         </div>
       </div>),
       (<div key='intention'>
-        <label>Did the language model get your intention correctly?</label>
+        <label>Did the system get your intention correctly?</label>
         <div>
           <label>
             <input
@@ -110,7 +110,7 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
         </div>
       </div>),
       (<div key='adjustments'>
-        <label>Did ChatGPT adjust effectively to your instructions after initial mistakes?</label>
+        <label>Did the system adjust effectively to your instructions after initial mistakes?</label>
         <div>
           <label>
             <input
@@ -142,7 +142,7 @@ const Chat = ({htmlString, setHtmlString, userName}) => {
         </div>
       </div>),
       (<div key='clarifications'>
-        <label>Did ChatGPT ask clarifying questions or make useful assumptions?</label>
+        <label>Did the system ask clarifying questions or make useful assumptions?</label>
         <div>
           <label>
             <input
