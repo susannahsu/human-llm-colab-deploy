@@ -5,6 +5,7 @@ import './App.css';
 
 function App() {
   const [userName, setUserName] = useState('');
+  const [showInstructions, setShowInstructions] = useState(true);
   
   useEffect(() => {
     let name;
@@ -191,6 +192,7 @@ function App() {
   `);
   return (
     <div className="App">
+      {showInstructions && <InstructionsModal onClose={() => setShowInstructions(false)} />}
       <div className="container">
         {/* Chat */}
         <div className="chat-section">
