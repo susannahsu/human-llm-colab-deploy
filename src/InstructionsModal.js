@@ -22,7 +22,7 @@ const InstructionsModal = ({ onClose }) => {
         <h3>Progressing Through Stages</h3>
         <ul>
           <li>The reference video will be revealed in stages, adding more details as you go.</li>
-          <li>Once you feel the current stage is complete, click <b>"Go to Next Stage."</b></li>
+          <li>Once you feel the current stage is complete, click <b>"Go to Stage X."</b></li>
         </ul>
 
         <h3>Completing the Task</h3>
