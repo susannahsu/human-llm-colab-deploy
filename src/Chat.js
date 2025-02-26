@@ -11,7 +11,7 @@ const videoUrls = [
   'https://drive.google.com/file/d/1d43L9FxK5483PdDdI6m0YR4Lt7Cd7ON_/view?usp=sharing',
 ]
 
-const Chat = ({htmlString, setHtmlString, userID}) => {
+const Chat = ({htmlString, setHtmlString, userID, promptType}) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -211,6 +211,7 @@ const Chat = ({htmlString, setHtmlString, userID}) => {
           htmlString,
           userID,
           // userName,
+          promptType,
           stage,
           messages: [
             ...messages,
