@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Chat from './Chat';
 import WebsitePreview from './WebsitePreview';
+import InstructionsModal from './InstructionsModal';
 import './App.css';
 
 function App() {
