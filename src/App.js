@@ -2,21 +2,30 @@ import React, {useState, useEffect} from 'react';
 import Chat from './Chat';
 import WebsitePreview from './WebsitePreview';
 import InstructionsModal from './InstructionsModal';
+import { v4 as uuidv4 } from 'uuid'; 
 import './App.css';
 
 function App() {
-  const [userName, setUserName] = useState('');
+  const [userID, setUserID] = useState(() => uuidv4());
+  //const [userName, setUserName] = useState('');
   const [showInstructions, setShowInstructions] = useState(true);
+  const [showUserIDModal, setShowUserIDModal] = useState(true);
   
+  // useEffect(() => {
+  //   let name;
+  //   while(!name) {
+  //     name = prompt('Enter your name:');
+  //     if (name) {
+  //       setUserName(name);
+  //     }
+  //   }
+  // }, []);
+
   useEffect(() => {
-    let name;
-    while(!name) {
-      name = prompt('Enter your name:');
-      if (name) {
-        setUserName(name);
-      }
-    }
-  }, []);
+    alert(
+      `Your unique ID for this experiment is: ${userID}\n\nPlease copy and save this ID somewhere. You will need it for the post-experiment survey.`
+    );
+  }, [userID]);
 
   const [htmlString, setHtmlString] = useState(`
     <div class="website-preview">
@@ -194,6 +203,44 @@ function App() {
   return (
     <div className="App">
       {showInstructions && <InstructionsModal onClose={() => setShowInstructions(false)} />}
+
+      {/* Modal to display user ID */}
+      {showUserIDModal && (
+        <div className="user-id-modal">
+          <div className="modal-content">
+            <h2>Important: Save Your User ID</h2>
+            <p>Your unique ID for this experiment is:</p>
+            <h3 style={{ fontSize: "1.5em", color: "red" }}>{userID}</h3>
+            
+            {/* Copy to Clipboard Button */}
+            <button 
+              onClick={() => {
+                navigator.clipboard.writeText(userID);
+                alert("User ID copied to clipboard!");
+              }}
+              style={{
+                marginTop: "10px",
+                padding: "8px 12px",
+                fontSize: "14px",
+                cursor: "pointer"
+              }}
+            >
+              Copy ID
+            </button>
+
+            <p>Please **copy and save this ID**. You will need it for the post-experiment survey.</p>
+
+            <button 
+              onClick={() => setShowUserIDModal(false)}
+              style={{ marginTop: "10px", padding: "8px 12px", fontSize: "14px" }}
+            >
+              I Have Saved It
+            </button>
+          </div>
+        </div>
+      )}
+
+
       <div className="container">
         {/* Chat */}
         <div className="chat-section">
