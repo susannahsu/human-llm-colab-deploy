@@ -19,6 +19,30 @@ const InstructionsModal = ({ onClose }) => {
           <li>If needed, you can refine your instructions or report issues.</li>
         </ul>
 
+        <h3>Using the Error/Feedback Form</h3>
+        <p>
+        If you notice any errors or want to provide feedback on the <strong>most recent AI interaction</strong>, use the Error/Feedback form:
+        </p>
+        <ul>
+          <li>Click the "Error/Feedback" button.</li>
+          <li>Select the relevant issues from the provided choices.</li>
+          <li>You DO NOT need to answer all questions—just those that apply.</li>
+          <li>Click "Submit" and wait a few seconds for confirmation.</li>
+          <li>The form will automatically close once successfully submitted.</li>
+        </ul>
+        <p><strong>Note:</strong> Each submission only applies to the most recent AI interaction.</p>
+
+        <h3>Useful Troubleshooting Tips</h3>
+        <p>
+        If you encounter any unexpected issues, such as <strong>webpage layout getting messed up</strong> (e.g., pages embedded within pages), try the following:
+        </p>
+        <ul>
+          <li>Ask the AI to "Revert the last change."</li>
+          <li>Explicitly state something along the line like "The last change introduced an error, please try again."</li>
+          <li>DO NOT refresh the page -- doing so reset all progress.</li>
+          <li>If the system stop responding, click 'Go to Stage X' until it shows 'I am done'. Hit 'I am done' to stop early and note the issue/describe why the experiment has stopped early in the comment section of the post-experiment survey.</li>
+        </ul>
+
         <h3>Progressing Through Stages</h3>
         <ul>
           <li>The reference video will be revealed in stages, adding more details as you go.</li>
